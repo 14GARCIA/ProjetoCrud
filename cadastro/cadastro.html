@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+     
+            function cadastrar() {
+            var cpfjs = document.getElementById("cpf").value;
+            var nomejs = document.getElementById("nome").value;
+            var idadejs = document.getElementById("idade").value;
+
+            var requisicao = new XMLHttpRequest();
+            requisicao.open("GET","controllerCadastro.php?cpf="+cpfjs+
+                            "&nome="+nomejs+"&idade="+idadejs+"&acao=inserir"
+                           );
+            requisicao.send();
+
+            requisicao.onload = function(){
+                document.getElementById("resposta").innerHTML= this.responseText;
+            }
+    }         2
+    
+            function Apagar() {
+            var cpfjs = document.getElementById("cpf").value;
+
+            var requisicao = new XMLHttpRequest();
+            requisicao.open("GET","controllerCadastro.php?cpf="+cpfjs+
+                            "&acao=apagar"
+                           );
+            requisicao.send();
+
+            requisicao.onload = function(){
+                document.getElementById("resposta").innerHTML= this.responseText;
+            }
+    }
+        
+    </script>
+</head>
+<body>
+    <input id = "nome" placeholder="Digite seu nome">
+    <input id = "cpf" placeholder="Digite seu cpf"> 
+    <input  id = "idade" placeholder="Digite seu idade">
+    <button onclick="cadastrar()">cadastrar</button>
+    <button onclick="Apagar()">Apagar</button>
+
+    <p id="resposta"></p>
+
+</body>
+</html>

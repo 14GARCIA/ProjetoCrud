@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+                    function cadastrar() {
+            var cpfjs = document.getElementById("cpf").value;
+            var datajs = document.getElementById("data").value;
+            var descricaojs = document.getElementById("descricao").value;
+
+            var requisicao = new XMLHttpRequest();
+            requisicao.open("GET","controllerAgenda.php?cpf="+cpfjs+
+                            "&data="+datajs+"&descricao="+descricaojs+"&acao=inserir"
+                           );
+            requisicao.send();
+
+            requisicao.onload = function(){
+                document.getElementById("resposta").innerHTML= this.responseText;
+            }
+    }
+    function Apagar() {
+            var cpfjs = document.getElementById("cpf").value;
+            var datajs = document.getElementById("data").value;
+            var descricaojs = document.getElementById("descricao").value;
+
+            var requisicao = new XMLHttpRequest();
+            requisicao.open("GET","controllerAgenda.php?cpf="+cpfjs+
+                           descricaojs+"&acao=apagar"
+                           );
+            requisicao.send();
+
+            requisicao.onload = function(){
+                document.getElementById("resposta").innerHTML= this.responseText;
+            }}
+
+            function atualizar() {
+            var cpfjs = document.getElementById("cpf").value;
+            var datajs = document.getElementById("data").value;
+            var descricaojs = document.getElementById("descricao").value;
+
+            var requisicao = new XMLHttpRequest();
+            requisicao.open("GET","controllerAgenda.php?cpf="+cpfjs+
+                            "&data="+datajs+"&descricao="+descricaojs+"&acao=atualizar"
+                           );
+            requisicao.send();
+
+            requisicao.onload = function(){
+                document.getElementById("resposta").innerHTML= this.responseText;
+            }
+    }
+    function consultar() {
+            var requisicao = new XMLHttpRequest();
+            requisicao.open("GET","controllerAgenda.php?acao=consultar");
+            requisicao.send();
+            
+            html = "";
+            requisicao.onload = function(){
+                var resposta = JSON.parse(this.responseText);
+                for(var i=0; i<resposta.length; i++){
+                    html = html + resposta[i].cpf + " " + resposta[i].nome + " " + resposta[i].data + " " + resposta[i].descricao + "<br>";
+
+                }
+                document.getElementById("resposta").innerHTML = html;
+
+
+            }
+        
+        }
+    </script>
+</head>
+<body>
+
+    <input type="num" id = "cpf" placeholder="Digite seu cpf"> 
+    <input type="date" id="data" placeholder="Agende uma consulta">
+    <input type="text" id = "descricao" placeholder="fale sobre sua consulta">
+    <button onclick="cadastrar()">Fazer o agendamento</button>
+    <button onclick="Apagar()">Apagar agendamento</button>
+    <button onclick="atualizar()">atualizar agendamento</button>
+    <button onclick="consultar()">consultar agendamentos</button>
+    
+
+
+    
+    <p id="resposta"></p>
+</body>
+</html>
